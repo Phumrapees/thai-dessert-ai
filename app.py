@@ -19,7 +19,7 @@ st.set_page_config(
 )
 
 # ========================================================
-# 2. ฐานข้อมูล SQLite สำหรับประวัติการทำนาย
+# 2. ฐานข้อมูลประวัติการทำนาย (SQLite)
 # ========================================================
 DB_PATH = "history.db"
 
@@ -67,178 +67,198 @@ def generate_speech(text, lang='th'):
     return fp
 
 # ========================================================
-# 3. ฐานข้อมูลความรู้ วัฒนธรรม ชื่อท้องถิ่นรายภาค และโภชนาการ (10 คลาส)
+# 3. ฐานข้อมูลวัฒนธรรมและภาษาท้องถิ่น 10 คลาส (แยก TH / EN สมบูรณ์)
 # ========================================================
 DESSERT_INFO = {
     "chao_kuai": {
-        "th_name": "เฉาก๊วย",
-        "en_name": "Grass Jelly (Chao Kuai)",
-        "calories": "90 - 120 kcal",
-        "regional": {
-            "central": "เฉาก๊วย",
-            "north": "วุ้นดำ / เฉาก๊วย",
-            "isan": "วุ้นดำ / เฉาก๊วย",
-            "south": "เฉาก๊วย / วุ้นดำ"
+        "name": {"th": "เฉาก๊วย", "en": "Grass Jelly (Chao Kuai)"},
+        "simple": {
+            "th": "วุ้นสมุนไพรสีดำเนื้อหนึบ ทำจากต้นเฉาก๊วย นิยมกินคู่กับน้ำแข็งและน้ำตาลทรายแดงหรือน้ำเชื่อม",
+            "en": "Chewy black herbal jelly made from Chinese mesona plants, served cold with ice and brown sugar syrup."
         },
-        "simple_th": "วุ้นสมุนไพรสีดำเนื้อหนึบ ทำจากต้นเฉาก๊วย นิยมกินคู่กับน้ำแข็งและน้ำตาลทรายแดงหรือน้ำเชื่อม",
-        "simple_en": "Chewy black herbal jelly made from Chinese mesona, served cold with ice and brown sugar syrup.",
-        "detail_th": "ทำจากการต้มต้นเฉาก๊วยแห้ง กรองน้ำแล้วผสมแป้งมันหรือแป้งท้าวยายม่อมเพื่อสร้างความหนึบ เนื้อสัมผัสเด้งนุ่ม ชุ่มคอ สรรพคุณแก้ร้อนใน",
-        "detail_en": "Crafted by boiling dried Platostoma palustre stems and setting with starch. Famous for its cooling medicinal herbal properties.",
-        "history_th": "มีต้นกำเนิดจากประเทศจีน เข้ามาในไทยผ่านชาวจีนโพ้นทะเล กลายเป็นของหวานดับร้อนยอดนิยมในวัฒนธรรมสตรีทฟู้ดไทย",
-        "history_en": "Originated in southern China and brought to Thailand by Chinese settlers, becoming a beloved heat-relief treat."
+        "detail": {
+            "th": "ทำจากการต้มต้นเฉาก๊วยแห้ง กรองน้ำแล้วผสมแป้งมันสำปะหลังหรือแป้งท้าวยายม่อมเพื่อสร้างความหนึบ เนื้อสัมผัสเด้งนุ่ม ชุ่มคอ สรรพคุณแก้ร้อนใน กระหายน้ำ",
+            "en": "Prepared by boiling dried Platostoma palustre stems and setting with starch. Renowned for its refreshing aroma and traditional cooling medicinal properties."
+        },
+        "history": {
+            "th": "มีต้นกำเนิดจากประเทศจีนตอนใต้ เข้ามาในไทยผ่านชาวจีนโพ้นทะเลและกลายเป็นของหวานดับร้อนยอดนิยมในวัฒนธรรมสตรีทฟู้ดไทย",
+            "en": "Originated in southern China and brought to Thailand by Chinese immigrants, quickly becoming an indispensable heat-relief treat in Thai street food culture."
+        },
+        "regional": {
+            "th": {"central": "เฉาก๊วย", "north": "วุ้นดำ / เฉาก๊วย", "isan": "วุ้นดำ / เฉาก๊วย", "south": "เฉาก๊วย / วุ้นดำ"},
+            "en": {"central": "Chao Kuai", "north": "Wun Dam / Chao Kuai", "isan": "Wun Dam / Chao Kuai", "south": "Chao Kuai / Wun Dam"}
+        }
     },
     "kaoniaomamuang": {
-        "th_name": "ข้าวเหนียวมะม่วง",
-        "en_name": "Mango Sticky Rice",
-        "calories": "350 - 450 kcal",
-        "regional": {
-            "central": "ข้าวเหนียวมะม่วง",
-            "north": "ข้าวนึ่งมะม่วง / ข้าวเหนียวมะม่วง",
-            "isan": "ข้าวเหนียวหมากม่วง",
-            "south": "เหนียวมะม่วง / ข้าวเหนียวมะม่วง"
+        "name": {"th": "ข้าวเหนียวมะม่วง", "en": "Mango Sticky Rice"},
+        "simple": {
+            "th": "ข้าวเหนียวมูนกะทิรสหวานมัน ทานคู่กับมะม่วงน้ำดอกไม้สุกสีทองและราดหัวกะทิสด",
+            "en": "Sweet glutinous rice steeped in rich coconut milk, paired with ripe golden mango and salted coconut cream drizzle."
         },
-        "simple_th": "ข้าวเหนียวมูนกะทิรสหวานมัน ทานคู่กับมะม่วงน้ำดอกไม้สุกสีทองและราดหัวกะทิข้น",
-        "simple_en": "Sweet glutinous rice steamed in coconut milk, served with fresh ripe mango and salted coconut drizzle.",
-        "detail_th": "ใช้ข้าวเหนียวเขี้ยวงูมูนกับหัวกะทิสด น้ำตาล และเกลือ โรยหน้าด้วยถั่วทองคั่วกรอบ ทานคู่กับมะม่วงสุกรสหวานฉ่ำ",
-        "detail_en": "Features glutinous rice steamed and steeped in sweetened rich coconut milk, garnished with crispy split mung beans.",
-        "history_th": "ขนมหวานระดับโลกที่มีบันทึกตั้งแต่ปลายสมัยอยุธยา สะท้อนภูมิปัญญาการถนอมและประยุกต์ผลไม้ตามฤดูกาลของไทย",
-        "history_en": "A globally acclaimed national dessert dating back to the late Ayutthaya era, representing Thai fruit pairing ingenuity."
+        "detail": {
+            "th": "ใช้ข้าวเหนียวเขี้ยวงูอย่างดีมูนกับหัวกะทิคั้นสด น้ำตาลทราย และเกลือ โรยหน้าด้วยถั่วทองคั่วกรอบ ทานเคียงกับมะม่วงสุกรสหวานอมเปรี้ยว",
+            "en": "Crafted from long-grain sticky rice steeped in warm coconut cream, palm sugar, and sea salt, garnished with toasted crispy split mung beans."
+        },
+        "history": {
+            "th": "ของหวานระดับตำนานของไทยที่มีประวัติบันทึกตั้งแต่สมัยอยุธยาตอนปลาย สะท้อนภูมิปัญญาการนำผลไม้ตามฤดูกาลมาจับคู่กับข้าวเหนียวมูนอย่างลงตัว",
+            "en": "A globally celebrated Thai dessert dating back to the late Ayutthaya era, demonstrating centuries of culinary finesse in pairing seasonal fruits."
+        },
+        "regional": {
+            "th": {"central": "ข้าวเหนียวมะม่วง", "north": "ข้าวนึ่งมะม่วง / ข้าวเหนียวมะม่วง", "isan": "ข้าวเหนียวหมากม่วง", "south": "เหนียวมะม่วง / ข้าวเหนียวมะม่วง"},
+            "en": {"central": "Khao Niao Mamuang", "north": "Khao Nueng Mamuang", "isan": "Khao Niao Mak Muang", "south": "Niao Mamuang"}
+        }
     },
     "khanom_chan": {
-        "th_name": "ขนมชั้น",
-        "en_name": "Layer Sweet Cake (Khanom Chan)",
-        "calories": "200 - 250 kcal (2-3 ชิ้น)",
-        "regional": {
-            "central": "ขนมชั้น",
-            "north": "ขนมชั้น",
-            "isan": "ขนมชั้น",
-            "south": "ขนมชั้น"
+        "name": {"th": "ขนมชั้น", "en": "Layer Sweet Cake (Khanom Chan)"},
+        "simple": {
+            "th": "ขนมไทยโบราณเนื้อเหนียวนุ่ม เรียงซ้อนเป็นชั้นๆ หอมกลิ่นใบเตยและกะทิสด",
+            "en": "Traditional steamed multi-layered cake featuring a chewy, delicate texture scented with natural pandan and coconut milk."
         },
-        "simple_th": "ขนมไทยโบราณเนื้อเหนียวนุ่ม เรียงซ้อนเป็นชั้นๆ หอมกลิ่นใบเตยและกะทิสด",
-        "simple_en": "Steamed multi-layered jelly cake with a chewy texture, scented with pandan and coconut milk.",
-        "detail_th": "ผสมแป้งมัน แป้งข้าวเจ้า และแป้งท้าว นวดกับน้ำกะทิและน้ำตาล นึ่งหยอดทีละชั้นสลับสีเขียวใบเตย นิยมทำ 9 ชั้นตามความเชื่อ",
-        "detail_en": "Prepared from tapioca, rice, and arrowroot flours, steamed meticulously layer by layer. Traditionally crafted with 9 auspicious layers.",
-        "history_th": "ขนมมงคลโบราณ นิยมใช้ในงานแต่งงานหรืองานเลื่อนตำแหน่ง สื่อถึงความเจริญก้าวหน้าและการเลื่อนขั้นที่เป็นลำดับขั้น",
-        "history_en": "An auspicious ceremony dessert symbolizing career advancement and successive steps toward prosperity."
+        "detail": {
+            "th": "ผสมแป้งมันสำปะหลัง แป้งข้าวเจ้า และแป้งท้าวยายม่อม นวดกับน้ำกะทิและน้ำตาล นึ่งหยอดทีละชั้นสลับสีเขียวใบเตย นิยมทำ 9 ชั้นตามความเชื่อมงคล",
+            "en": "Steamed meticulously layer by layer using tapioca, rice, and arrowroot starch blended with fragrant coconut milk. Traditionally made in 9 auspicious layers."
+        },
+        "history": {
+            "th": "หนึ่งในขนมมงคลโบราณที่นิยมใช้ในพิธีมงคลสมรสหรืองานเลื่อนตำแหน่ง สื่อถึงความเจริญก้าวหน้า การได้เลื่อนยศเลื่อนขั้นที่เป็นลำดับชั้นอย่างมั่นคง",
+            "en": "An ancient royal dessert symbolizing career advancement and prosperous milestones, often presented at weddings and promotion ceremonies."
+        },
+        "regional": {
+            "th": {"central": "ขนมชั้น", "north": "ขนมชั้น", "isan": "ขนมชั้น", "south": "ขนมชั้น"},
+            "en": {"central": "Khanom Chan", "north": "Khanom Chan", "isan": "Khanom Chan", "south": "Khanom Chan"}
+        }
     },
     "khanomfakbua": {
-        "th_name": "ขนมฝักบัว",
-        "en_name": "Lotus Leaf Pancake (Khanom Fak Bua)",
-        "calories": "180 - 220 kcal (ต่อชิ้น)",
-        "regional": {
-            "central": "ขนมฝักบัว / จูจุน",
-            "north": "ขนมฝักบัว / จู่จุน",
-            "isan": "ขนมฝักบัว / ขนมจี่จุน",
-            "south": "ขนมจูจุน / ขนมจี่จุน"
+        "name": {"th": "ขนมฝักบัว", "en": "Lotus Leaf Pancake (Khanom Fak Bua)"},
+        "simple": {
+            "th": "ขนมทอดทรงกลม ขอบบางกรอบหยัก ตรงกลางพองฟูนุ่ม หอมหวานน้ำตาลโตนด",
+            "en": "Deep-fried round pastry with crispy ruffled edges and a fluffy, puffy domed center flavored with natural palm sugar."
         },
-        "simple_th": "ขนมทอดทรงกลม ขอบบางกรอบหยัก ตรงกลางพองฟูนุ่ม หอมหวานน้ำตาลโตนด",
-        "simple_en": "Deep-fried round sweet cake with crispy lace ruffled edges and a soft, airy domed center.",
-        "detail_th": "ใช้แป้งข้าวเจ้าผสมแป้งข้าวเหนียว น้ำตาลโตนดและน้ำใบเตย ทอดในกระทะก้นลึกจนตรงกลางปูดฟูเป็นกระเปาะคล้ายฝักบัว",
-        "detail_en": "Made from palm sugar and rice flour batter, deep-fried in hot oil to create a distinctive volcanic dome shape.",
-        "history_th": "ขนมโบราณที่สื่อถึงความเบ่งบาน รุ่งเรือง ทางภาคใต้นิยมเรียกว่า 'ขนมจูจุน' ใช้ในงานบุญและเทศกาลสารทเดือนสิบ",
-        "history_en": "Symbolizes blossoming good fortune. Commonly known as 'Joo Joon' in Southern Thailand for festive ceremonies."
+        "detail": {
+            "th": "ใช้แป้งข้าวเจ้าผสมแป้งข้าวเหนียว น้ำตาลโตนดหรือน้ำตาลมะพร้าว และน้ำใบเตย ทอดในกระทะก้นลึกจนตรงกลางปูดฟูเป็นรูปกระเปาะคล้ายฝักบัว",
+            "en": "Prepared from a batter of rice and sticky rice flours sweetened with palm sugar, deep-fried in hot oil to create its iconic volcano-like raised center."
+        },
+        "history": {
+            "th": "ขนมโบราณที่สื่อถึงความเจริญรุ่งเรืองและการเบ่งบานของชีวิต ทางภาคใต้นิยมเรียกว่า 'ขนมจูจุน' ใช้ในงานบุญและเทศกาลสำคัญ",
+            "en": "Symbolizes blossoming fortune and life growth. Widely known as 'Joo Joon' in Southern Thailand and served during sacred merit-making events."
+        },
+        "regional": {
+            "th": {"central": "ขนมฝักบัว / จูจุน", "north": "ขนมฝักบัว / จู่จุน", "isan": "ขนมฝักบัว / จี่จุน", "south": "ขนมจูจุน / ขนมจี่จุน"},
+            "en": {"central": "Khanom Fak Bua / Joo Joon", "north": "Khanom Fak Bua / Joo Joon", "isan": "Khanom Fak Bua / Jee Joon", "south": "Khanom Joo Joon / Jee Joon"}
+        }
     },
     "khanomkrok": {
-        "th_name": "ขนมครก",
-        "en_name": "Coconut Rice Pancakes (Khanom Krok)",
-        "calories": "180 - 230 kcal (ต่อ 1 คู่)",
-        "regional": {
-            "central": "ขนมครก",
-            "north": "ขนมครก (มักทานแบบต้นตำรับ)",
-            "isan": "ขนมครก (นิยมโรยต้นหอม/ข้าวโพด)",
-            "south": "ขนมครก (บางพื้นที่จิ้มน้ำตาลทราย)"
+        "name": {"th": "ขนมครก", "en": "Coconut Rice Pancakes (Khanom Krok)"},
+        "simple": {
+            "th": "ขนมกะทิหยอดหลุมกระทะเหล็ก ผิวด้านนอกกรอบ ด้านในนุ่มเยิ้มรสหวานมันเค็ม",
+            "en": "Traditional grilled two-layer coconut pudding cups, crispy on the outside shell and luxuriously creamy on the inside."
         },
-        "simple_th": "ขนมกะทิหยอดหลุมกระทะเหล็ก ผิวด้านนอกกรอบ ด้านในนุ่มเยิ้มรสชาติหวานมันเค็ม",
-        "simple_en": "Cast-iron grilled two-layer coconut pudding cups, crispy on the outer shell and silky inside.",
-        "detail_th": "ประกอบด้วยแป้งข้าวเจ้าชั้นล่างที่กรอบ และหน้ากะทิสดหวานมัน โรยหน้าด้วยต้นหอม ข้าวโพดหวาน เผือก หรือฟักทอง",
-        "detail_en": "Consists of two layers: crispy rice-flour shell and sweet coconut custard, topped with scallions or sweet corn.",
-        "history_th": "ขนมคู่บ้านคู่เมืองตั้งแต่สมัยอยุธยา ทำในกระทะหลุมดินเผา เป็นสัญลักษณ์ของขนมคู่แฝดที่ต้องประกบกันก่อนรับประทาน",
-        "history_en": "An iconic Ayutthaya-era street treat cooked in dimpled pans, paired face-to-face before being served."
+        "detail": {
+            "th": "ประกอบด้วยแป้งข้าวเจ้าชั้นล่างที่กรอบเกรียม และหน้ากะทิสดหวานมัน แต่งหน้าด้วยต้นหอมซอย ข้าวโพดหวาน เผือก หรือฟักทอง",
+            "en": "Consists of two layers: a crunchy rice-flour base and rich sweet coconut cream, commonly topped with sweet corn, scallions, or taro."
+        },
+        "history": {
+            "th": "ขนมคู่บ้านคู่เมืองตั้งแต่สมัยอยุธยา ทำในกระทะหลุมดินเผา เป็นสัญลักษณ์ของขนมคู่แฝดที่ต้องนำสองฝามาประกบกันก่อนรับประทาน",
+            "en": "An iconic Ayutthaya-era street delicacy cooked in dimpled cast-iron pans, traditionally served face-to-face as joined twin halves."
+        },
+        "regional": {
+            "th": {"central": "ขนมครก", "north": "ขนมครก (ต้นตำรับ)", "isan": "ขนมครก (โรยข้าวโพด/ต้นหอม)", "south": "ขนมครก (ทานคู่กับน้ำตาลทราย)"},
+            "en": {"central": "Khanom Krok", "north": "Khanom Krok (Traditional)", "isan": "Khanom Krok (Corn/Scallion)", "south": "Khanom Krok (Dip with sugar)"}
+        }
     },
     "kluaithot": {
-        "th_name": "กล้วยทอด (กล้วยแขก)",
-        "en_name": "Deep-Fried Banana (Kluai Thot)",
-        "calories": "250 - 300 kcal (3-4 ชิ้น)",
-        "regional": {
-            "central": "กล้วยแขก / กล้วยทอด",
-            "north": "กล้วยทอด / กล้วยแขก",
-            "isan": "กล้วยทอด / กล้วยแขก",
-            "south": "กล้วยทอด / กล้วยเจี่ยน"
+        "name": {"th": "กล้วยทอด (กล้วยแขก)", "en": "Deep-Fried Banana (Kluai Thot)"},
+        "simple": {
+            "th": "กล้วยน้ำว้าหั่นชิ้นชุบแป้งผสมมะพร้าวขูดและงา ทอดจนสีเหลืองทองกรอบกรุบ",
+            "en": "Crisp golden banana fritters coated in sesame seeds, fresh grated coconut, and aromatic rice flour batter."
         },
-        "simple_th": "กล้วยน้ำว้าฝานชิ้นชุบแป้งข้าวเจ้าผสมมะพร้าวขูดและงา ทอดจนสีเหลืองทองกรอบกรุบ",
-        "simple_en": "Crisp golden banana slices coated in sesame, shredded coconut, and rice flour batter.",
-        "detail_th": "ใช้กล้วยน้ำว้าห่ามชุบแป้งผสมมะพร้าวขูด หัวกะทิ และงาขาว ทอดในน้ำมันร้อนปานกลางจนแป้งกรอบนาน ไม่อมน้ำมัน",
-        "detail_en": "Prepared using semi-ripe Namwa bananas sliced and dipped in coconut-sesame batter, deep-fried to perfection.",
-        "history_th": "ได้รับอิทธิพลการทอดชุบแป้งจากพ่อค้าชาวอินเดียในอดีต จึงถูกเรียกว่า 'กล้วยแขก' ก่อนปรับเป็นสูตรมะพร้าวสไตล์ไทย",
-        "history_en": "Originating from Indian batter-frying influences, later infused with native Thai grated coconut and sesame."
+        "detail": {
+            "th": "ใช้กล้วยน้ำว้าห่ามชุบแป้งผสมมะพร้าวขูด หัวกะทิ น้ำตาลทราย และงาขาว ทอดในน้ำมันร้อนปานกลางจนแป้งกรอบทนนาน ไม่อมน้ำมัน",
+            "en": "Uses firm Namwa bananas sliced and dipped in coconut-sesame batter, fried to golden-brown crunchiness."
+        },
+        "history": {
+            "th": "ได้รับอิทธิพลการทอดชุบแป้งจากพ่อค้าชาวอินเดียในอดีต จึงถูกเรียกว่า 'กล้วยแขก' ก่อนปรับรสชาติด้วยการใส่มะพร้าวขูดและงาสไตล์ไทย",
+            "en": "Influenced by Indian batter-frying culinary trades centuries ago, subsequently customized with native Thai coconut and sesame."
+        },
+        "regional": {
+            "th": {"central": "กล้วยแขก / กล้วยทอด", "north": "กล้วยทอด / กล้วยแขก", "isan": "กล้วยทอด / กล้วยแขก", "south": "กล้วยทอด / กล้วยเจี่ยน"},
+            "en": {"central": "Kluai Khaek / Kluai Thot", "north": "Kluai Thot / Kluai Khaek", "isan": "Kluai Thot / Kluai Khaek", "south": "Kluai Thot / Kluai Chian"}
+        }
     },
     "lodchongnamkathi": {
-        "th_name": "ลอดช่องน้ำกะทิ",
-        "en_name": "Lod Chong in Sweet Coconut Milk",
-        "calories": "220 - 280 kcal",
-        "regional": {
-            "central": "ลอดช่องน้ำกะทิ / ลอดช่องไทย",
-            "north": "ลอดช่องน้ำกะทิ",
-            "isan": "ลอดช่อง / คันหลาว",
-            "south": "ลอดช่องน้ำกะทิ / เชงซิม"
+        "name": {"th": "ลอดช่องน้ำกะทิ", "en": "Lod Chong in Sweet Coconut Milk"},
+        "simple": {
+            "th": "ตัวแป้งสีเขียวใบเตยเหนียวนุ่ม ลอยในน้ำกะทิน้ำตาลมะพร้าวเคี่ยวหอมควันเทียน ทานกับน้ำแข็งไส",
+            "en": "Fragrant green pandan droplet noodles served submerged in iced palm sugar coconut milk smoked with scented candles."
         },
-        "simple_th": "ตัวแป้งสีเขียวใบเตยเหนียวนุ่ม ลอยในน้ำกะทิน้ำตาลมะพร้าวเคี่ยวหอมควันเทียน ทานกับน้ำแข็งไส",
-        "simple_en": "Fragrant green pandan droplet noodles served in iced smoked palm sugar coconut milk.",
-        "detail_th": "กวนแป้งข้าวเจ้าผสมน้ำปูนใสและใบเตยจนเหนียว กดผ่านพิมพ์รูลงในน้ำเย็นจัด เสิร์ฟกับน้ำกะทิเคี่ยวน้ำตาลโตนด",
-        "detail_en": "Rice flour cooked with pandan and limestone water, pressed through a perforated mold into ice water, served in coconut syrup.",
-        "history_th": "ขนมไทยโบราณตั้งแต่สมัยอยุธยา คำว่า 'ลอดช่อง' สื่อถึงกรรมวิธีการกดแป้งให้ลอดผ่านรูกระป๋องพิมพ์",
-        "history_en": "A classic Ayutthaya dessert named after the unique process of pressing dough through perforated sieve holes."
+        "detail": {
+            "th": "กวนแป้งข้าวเจ้าผสมน้ำปูนใสและใบเตยจนเหนียวใส กดผ่านพิมพ์รูลงในน้ำเย็นจัด เสิร์ฟพร้อมน้ำกะทิเคี่ยวน้ำตาลโตนดและน้ำแข็งไส",
+            "en": "Pandan rice flour cooked to a smooth paste, pressed through perforated brass molds into ice water, served in rich coconut nectar syrup."
+        },
+        "history": {
+            "th": "ขนมไทยโบราณที่มีมาตั้งแต่สมัยอยุธยา คำว่า 'ลอดช่อง' มาจากกรรมวิธีการกดแป้งให้ลอดผ่านรูกระป๋องพิมพ์",
+            "en": "An ancient Thai classic dating back to Ayutthaya, directly named after the unique action of pressing batter through sieve holes."
+        },
+        "regional": {
+            "th": {"central": "ลอดช่องน้ำกะทิ / ลอดช่องไทย", "north": "ลอดช่องน้ำกะทิ", "isan": "ลอดช่อง / ขนมคันหลาว", "south": "ลอดช่องน้ำกะทิ / เชงซิม"},
+            "en": {"central": "Lod Chong Thai", "north": "Lod Chong Nam Kathi", "isan": "Lod Chong / Khanom Khan Lao", "south": "Lod Chong Nam Kathi / Cheng Sim"}
+        }
     },
     "pathongko": {
-        "th_name": "ปาท่องโก๋",
-        "en_name": "Thai Deep-Fried Dough Stick",
-        "calories": "240 - 290 kcal (ต่อ 1 คู่)",
-        "regional": {
-            "central": "ปาท่องโก๋",
-            "north": "ปาท่องโก๋",
-            "isan": "ปาท่องโก๋",
-            "south": "จาก๋วย / อิ่วจาก้วย / ปาท่องโก๋"
+        "name": {"th": "ปาท่องโก๋", "en": "Thai Deep-Fried Dough Stick"},
+        "simple": {
+            "th": "แป้งสาลีตัดท่อนประกบคู่ทอดกรอบฟู นิยมทานคู่กับกาแฟโบราณ นมข้นหวาน หรือสังขยาใบเตย",
+            "en": "Crispy golden twin fried dough batons, airy and soft inside, traditionally paired with morning coffee or pandan custard."
         },
-        "simple_th": "แป้งสาลีตัดท่อนประกบคู่ทอดกรอบฟู นิยมทานคู่กับกาแฟโบราณ นมข้นหวาน หรือสังขยาใบเตย",
-        "simple_en": "Golden crispy twin fried dough sticks, light and airy inside, served with pandan custard or sweet condensed milk.",
-        "detail_th": "นวดแป้งสาลีหมักยีสต์และแอมโมเนีย ตัดเป็นชิ้นคู่ประกบกัน ทอดในน้ำมันร้อนจนพองตัวกรอบนอกเหนียวนุ่มใน",
-        "detail_en": "Yeast-leavened wheat flour dough shaped into twin strips and deep-fried until puffed and crisp.",
-        "history_th": "ดัดแปลงมาจาก 'อิ่วจาก้วย' ของชาวจีน ในภาคใต้ยังคงเรียกตามสำเนียงเดิมว่า 'จาก๋วย' นิยมกินเป็นอาหารเช้า",
-        "history_en": "Adapted from Chinese 'Youtiao'. In Southern Thailand, it retains its traditional Hokkien name 'Cha Kway'."
+        "detail": {
+            "th": "นวดแป้งสาลีหมักยีสต์ ตัดเป็นชิ้นประกบคู่แล้วยืดลงทอดในน้ำมันร้อน พองตัวกรอบนอกนุ่มเหนียวด้านใน",
+            "en": "Yeast-leavened wheat flour dough shaped into twin strips and flash-fried until puffy, crisp, and slightly savory."
+        },
+        "history": {
+            "th": "ดัดแปลงมาจาก 'อิ่วจาก้วย' ของชาวจีน ในภาคใต้ยังคงเรียกตามสำเนียงเดิมว่า 'จาก๋วย' นิยมกินเป็นอาหารเช้าคู่กับเครื่องดื่มร้อน",
+            "en": "Adapted from Chinese 'Youtiao'. In Southern Thailand, it faithfully preserves its Hokkien name 'Cha Kway'."
+        },
+        "regional": {
+            "th": {"central": "ปาท่องโก๋", "north": "ปาท่องโก๋", "isan": "ปาท่องโก๋", "south": "จาก๋วย / อิ่วจาก้วย / ปาท่องโก๋"},
+            "en": {"central": "Pathongko", "north": "Pathongko", "isan": "Pathongko", "south": "Cha Kway / Iu Cha Kway / Pathongko"}
+        }
     },
     "ruamnit": {
-        "th_name": "รวมมิตร",
-        "en_name": "Ruam Mit (Mixed Sweet Toppings)",
-        "calories": "250 - 320 kcal",
-        "regional": {
-            "central": "รวมมิตร / รวมมิตรน้ำกะทิ",
-            "north": "รวมมิตร / หวานเย็นรวมมิตร",
-            "isan": "รวมมิตร",
-            "south": "รวมมิตร / น้ำแข็งไสรวมมิตร"
+        "name": {"th": "รวมมิตร", "en": "Ruam Mit (Mixed Sweet Toppings)"},
+        "simple": {
+            "th": "ของหวานรวมเครื่องหลากสีสัน เช่น ลอดช่อง ทับทิมกรอบ ขนุน วุ้นมะพร้าว ข้าวโพด ในน้ำกะทิสดใส่น้ำแข็ง",
+            "en": "A vibrant icy dessert combining colorful jellies, crunchy water chestnuts, jackfruit, and sweet corn in cold coconut milk."
         },
-        "simple_th": "ของหวานรวมเครื่องหลากสีสัน เช่น ลอดช่อง ทับทิมกรอบ ขนุน วุ้นมะพร้าว ข้าวโพด ในน้ำกะทิสดใส่น้ำแข็ง",
-        "simple_en": "A refreshing bowl uniting colorful jellies, water chestnuts, sweet corn, and jackfruit in chilled coconut syrup.",
-        "detail_th": "รวบรวมทับทิมกรอบ แป้งกรอบสามสี ขนุนฉีก และเม็ดชิด ราดด้วยน้ำเชื่อมกะทิอบควันเทียนและน้ำแข็งไสละเอียด",
-        "detail_en": "Assembled with mock pomegranate seeds, colorful starch jellies, and jackfruit, smothered with crushed ice and sweetened coconut milk.",
-        "history_th": "สะท้อนวิถีวัฒนธรรมการแบ่งปันและความหลากหลาย โดยนำเครื่องขนมหวานที่มีในท้องถิ่นมารวมในชามเดียว",
-        "history_en": "Embodies communal harmony by combining diverse local dessert textures and flavors into a celebratory single bowl."
+        "detail": {
+            "th": "รวบรวมทับทิมกรอบ แป้งกรอบสามสี ลอดช่อง ขนุนฉีก และเม็ดชิด ราดด้วยน้ำกะทิเคี่ยวและน้ำแข็งไสละเอียด ดับกระหายคลายร้อน",
+            "en": "An assorted bowl of mock pomegranate pearls, jackfruit slices, and pandan noodles submerged in chilled sweet coconut nectar."
+        },
+        "history": {
+            "th": "สะท้อนวัฒนธรรมการแบ่งปันและความหลากหลาย โดยนำวัตถุดิบหวานที่มีในท้องถิ่นมารวมไว้ในชามเดียวอย่างลงตัว",
+            "en": "Symbolizes harmony and community generosity by bringing diverse regional sweet toppings together in a single bowl."
+        },
+        "regional": {
+            "th": {"central": "รวมมิตร / รวมมิตรน้ำกะทิ", "north": "รวมมิตร / หวานเย็นรวมมิตร", "isan": "รวมมิตร", "south": "รวมมิตร / น้ำแข็งไสรวมมิตร"},
+            "en": {"central": "Ruam Mit", "north": "Ruam Mit / Wan Yen", "isan": "Ruam Mit", "south": "Ruam Mit / Nam Kheng Sai"}
+        }
     },
     "thongmuan": {
-        "th_name": "ทองม้วน",
-        "en_name": "Crispy Coconut Rolls (Thong Muan)",
-        "calories": "150 - 180 kcal (3-4 ชิ้น)",
-        "regional": {
-            "central": "ทองม้วน",
-            "north": "ทองม้วน / ขนมทองม้วน",
-            "isan": "ทองม้วน",
-            "south": "ทองม้วน / ทองพับ / ขนมพับ"
+        "name": {"th": "ทองม้วน", "en": "Crispy Coconut Rolls (Thong Muan)"},
+        "simple": {
+            "th": "แผ่นแป้งกะทิปิ้งบนพิมพ์ทองเหลืองจนกรอบ ม้วนเป็นแท่งทรงกระบอก หอมหวานกลิ่นกะทิและงาดำ",
+            "en": "Crisp rolled wafer cylinders made from rich coconut cream, palm sugar, and aromatic toasted black sesame."
         },
-        "simple_th": "แผ่นแป้งกะทิปิ้งบนพิมพ์ทองเหลืองจนกรอบ ม้วนเป็นแท่งทรงกระบอก หอมหวานกลิ่นกะทิและงาดำ",
-        "simple_en": "Crisp rolled wafer cylinders made with rich coconut milk, palm sugar, and aromatic toasted black sesame.",
-        "detail_th": "ทำจากแป้งสาลีผสมกะทิสด ไข่ไก่ และงาดำ หยอดลงเตาพิมพ์ปิ้งไฟอ่อนให้สุกหอม แล้วรีบม้วนเป็นทรงกระบอกทันทีขณะยังร้อน",
-        "detail_en": "Made from rich coconut cream batter grilled on patterned brass waffle tongs, swiftly rolled into rolls while hot.",
-        "history_th": "ได้รับอิทธิพลจากขนมอบโปรตุเกสสมัยอยุธยา คำว่า 'ทอง' สื่อถึงความร่ำรวยมั่งคั่ง ในภาคใต้นิยมทำแบบพับเรียกว่า 'ทองพับ'",
-        "history_en": "Influenced by Portuguese pastries in the 17th century. The word 'Thong' (Gold) symbolizes continuous prosperity."
+        "detail": {
+            "th": "ทำจากแป้งสาลีผสมกะทิสด ไข่ไก่ และงาดำ หยอดลงเตาพิมพ์ปิ้งไฟอ่อนให้สุกหอม แล้วรีบม้วนเป็นทรงกระบอกทันทีขณะยังร้อน",
+            "en": "Prepared by grilling rich coconut-egg batter on patterned brass tongs, then immediately rolling into cylinders while warm and pliable."
+        },
+        "history": {
+            "th": "ได้รับอิทธิพลจากขนมอบโปรตุเกสตั้งแต่สมัยอยุธยา คำว่า 'ทอง' สื่อถึงความร่ำรวยมั่งคั่ง ในภาคใต้นิยมทำแบบพับเรียกว่า 'ทองพับ'",
+            "en": "Influenced by Portuguese rolled pastries during the 17th century. The word 'Thong' (Gold) conveys financial luck and prosperity."
+        },
+        "regional": {
+            "th": {"central": "ทองม้วน", "north": "ทองม้วน / ขนมทองม้วน", "isan": "ทองม้วน", "south": "ทองม้วน / ขนมทองพับ"},
+            "en": {"central": "Thong Muan", "north": "Thong Muan", "isan": "Thong Muan", "south": "Thong Muan / Thong Phap"}
+        }
     }
 }
 
@@ -248,46 +268,34 @@ CLASS_NAMES = [
 ]
 
 # ========================================================
-# 4. โมเดลและการ Preprocess ทั้ง 7 โมเดล
+# 4. โมเดลที่มีอยู่จริงบน GitHub (3 โมเดลยอดเยี่ยม)
 # ========================================================
-MODELS_DIR = "/content/drive/MyDrive/INET/Applied Machine Learning/Kanomthai-Group/models"
+MODELS_DIR = "models"
 
-MODEL_OPTIONS = {
-    "EfficientNetB0 (ความแม่นยำ 97.2%)": {
+AVAILABLE_MODELS = {
+    "EfficientNetB0": {
         "file": "kanomthai_efficientnetb0.keras",
-        "preprocess": tf.keras.applications.efficientnet.preprocess_input
+        "preprocess": tf.keras.applications.efficientnet.preprocess_input,
+        "name_th": "EfficientNetB0 (ความแม่นยำ 97.20% - แนะนำ)",
+        "name_en": "EfficientNetB0 (Accuracy 97.20% - Recommended)"
     },
-    "DenseNet201 (96.53%)": {
-        "file": "kanomthai_densenet201.keras",
-        "preprocess": tf.keras.applications.densenet.preprocess_input
-    },
-    "MobileNetV2 (96.27%)": {
+    "MobileNetV2": {
         "file": "kanomthai_mobilenetv2.keras",
-        "preprocess": tf.keras.applications.mobilenet_v2.preprocess_input
+        "preprocess": tf.keras.applications.mobilenet_v2.preprocess_input,
+        "name_th": "MobileNetV2 (ความแม่นยำ 96.27%)",
+        "name_en": "MobileNetV2 (Accuracy 96.27%)"
     },
-    "MobileNetV3Large (96.13%)": {
+    "MobileNetV3Large": {
         "file": "kanomthai_mobilenetv3large.keras",
-        "preprocess": tf.keras.applications.mobilenet_v3.preprocess_input
-    },
-    "ResNet50 (95.60%)": {
-        "file": "kanomthai_resnet50.keras",
-        "preprocess": tf.keras.applications.resnet50.preprocess_input
-    },
-    "EfficientNetV2M (94.80%)": {
-        "file": "kanomthai_efficientnetv2m.keras",
-        "preprocess": tf.keras.applications.efficientnet_v2.preprocess_input
-    },
-    "ResNet50V2 (93.07%)": {
-        "file": "kanomthai_resnet50v2.keras",
-        "preprocess": tf.keras.applications.resnet_v2.preprocess_input
+        "preprocess": tf.keras.applications.mobilenet_v3.preprocess_input,
+        "name_th": "MobileNetV3Large (ความแม่นยำ 96.13%)",
+        "name_en": "MobileNetV3Large (Accuracy 96.13%)"
     }
 }
 
 @st.cache_resource
 def load_prediction_model(model_filename):
     model_path = os.path.join(MODELS_DIR, model_filename)
-    if not os.path.exists(model_path):
-        model_path = os.path.join("models", model_filename)
     try:
         return tf.keras.models.load_model(model_path, compile=False)
     except Exception:
@@ -303,105 +311,111 @@ def predict_image(image: Image.Image, model, preprocess_fn):
     return preds
 
 # ========================================================
-# 5. พจนานุกรมคำแปล UI (ระบบ 2 ภาษา ไทย-อังกฤษ)
+# 5. พจนานุกรมคำแปล UI ครบ 100% (True Localization)
 # ========================================================
 UI_TEXT = {
     "th": {
         "title": "🍡 ระบบจำแนกประเภทและเผยแพร่วัฒนธรรมขนมไทย",
-        "subtitle": "Thai Dessert Cultural Image Classification AI with Deep Learning",
-        "settings": "⚙️ การตั้งค่า",
-        "model_select": "เลือกโมเดลทำนาย (Model):",
-        "about_title": "📊 ข้อมูลระบบ",
-        "about_desc": "- **จำนวนคลาส:** 10 คลาส\n- **ขนาดภาพ:** 224 x 224 pixels\n- **อ้างอิงงานวิจัย:** KediNet, AUCC & ThaiFood-50",
+        "subtitle": "ปัญญาประดิษฐ์จำแนกรูปภาพขนมไทยและสารานุกรมเชิงวัฒนธรรม",
+        "settings": "⚙️ การตั้งค่าระบบ",
+        "model_select": "เลือกโมเดลทำนาย:",
+        "about_title": "📊 รายละเอียดโมเดล",
+        "about_desc": "- **จำนวนคลาส:** 10 คลาสขนมไทย\n- **ความละเอียดภาพ:** 224 x 224 พิกเซล\n- **โมเดลบน GitHub:** ผ่านการคัดเลือกเฉพาะโมเดลประสิทธิภาพสูง",
         "tab1": "📷 ถ่ายภาพและทำนาย",
         "tab2": "📜 ประวัติการใช้งาน",
-        "tab3": "📚 คลังความรู้ขนมไทย 10 คลาส",
+        "tab3": "📚 สารานุกรมขนมไทย 10 เมนู",
         "input_header": "1. นำเข้าภาพขนมไทย",
-        "mode_select": "วิธีนำเข้าภาพ:",
-        "mode_cam": "ถ่ายภาพผ่านกล้อง (Camera)",
-        "mode_up": "อัปโหลดไฟล์ภาพ (Upload)",
-        "cam_label": "ถ่ายภาพขนมไทยที่ต้องการตรวจสอบ",
-        "up_label": "เลือกไฟล์ภาพ (JPG, PNG, WEBP):",
+        "mode_select": "เลือกวิธีนำเข้าภาพ:",
+        "mode_cam": "ถ่ายภาพจากกล้อง",
+        "mode_up": "อัปโหลดไฟล์ภาพ",
+        "cam_label": "กดปุ่มด้านล่างเพื่อถ่ายภาพ",
+        "up_label": "เลือกไฟล์รูปภาพ (JPG, PNG, WEBP):",
         "result_header": "2. ผลการวิเคราะห์",
         "waiting": "👈 กรุณาถ่ายภาพหรืออัปโหลดรูปภาพเพื่อเริ่มต้นการทำนาย",
-        "pred_label": "🎉 ผลการทำนาย:",
-        "confidence_label": "ความมั่นใจ (Confidence Score)",
-        "warn_low_conf": "⚠️ คำเตือน: ความมั่นใจต่ำกว่า 60% ภาพอาจไม่ชัดเจน แสงไม่พอ หรืออาจไม่ใช่ขนมไทยใน 10 คลาสที่รองรับ",
+        "pred_label": "ผลการทำนาย:",
+        "confidence_label": "ความมั่นใจ",
+        "warn_low_conf": "⚠️ คำเตือน: ความมั่นใจต่ำกว่า 60% ภาพอาจไม่ชัดเจน แสงไม่พอ หรืออาจไม่ใช่ขนมไทยใน 10 เมนูที่รองรับ",
         "tts_audio": "🔊 ฟังเสียงอ่านชื่อขนม:",
-        "tts_th": "สำเนียงไทย",
-        "tts_en": "สำเนียงอังกฤษ",
-        "regional_title": "🗺️ ชื่อเรียกตามภูมิภาคต่างๆ ในประเทศไทย:",
+        "tts_btn_th": "สำเนียงไทย",
+        "tts_btn_en": "สำเนียงอังกฤษ",
+        "regional_title": "🗺️ ชื่อเรียกตามแต่ละภูมิภาคในไทย:",
         "reg_c": "ภาคกลาง:",
         "reg_n": "ภาคเหนือ:",
         "reg_i": "ภาคอีสาน:",
         "reg_s": "ภาคใต้:",
-        "calories_label": "🔥 พลังงานโดยประมาณ:",
         "find_maps": "📍 ค้นหาร้านขายขนมนี้บน Google Maps",
-        "detail_header": "📖 รายละเอียดเมนูและประวัติวัฒนธรรม",
+        "detail_header": "📖 ข้อมูลรายละเอียดและวัฒนธรรม",
         "detail_simple": "คำอธิบายเบื้องต้น:",
         "detail_proc": "วัตถุดิบและวิธีทำ:",
-        "detail_hist": "🏛️ ประวัติความเป็นมา:",
-        "top3_title": "🏆 ความน่าจะเป็นสูงสุด 3 อันดับแรก:",
+        "detail_hist": "ประวัติความเป็นมา:",
+        "top3_title": "🏆 อันดับความน่าจะเป็นสูงสุด 3 อันดับแรก:",
         "col_rank": "อันดับ",
-        "col_name_th": "ชื่อขนม (TH)",
-        "col_name_en": "ชื่อขนม (EN)",
-        "col_prob": "ความน่าจะเป็น (%)",
+        "col_name": "ชื่อขนม",
+        "col_prob": "ความน่าจะเป็น",
         "hist_total": "จำนวนการทำนายทั้งหมด",
         "hist_avg_conf": "ความมั่นใจเฉลี่ย",
         "hist_clear": "🗑️ ล้างประวัติทั้งหมด",
         "hist_empty": "ยังไม่มีประวัติการทำนายในระบบ",
-        "hist_export": "📥 ดาวน์โหลดประวัติ (CSV)"
+        "hist_export": "📥 ดาวน์โหลดประวัติ (CSV)",
+        "hist_col_id": "ลำดับ",
+        "hist_col_time": "วัน-เวลา",
+        "hist_col_model": "โมเดล",
+        "hist_col_name": "ชื่อที่ทำนายได้",
+        "hist_col_conf": "ความมั่นใจ (%)"
     },
     "en": {
         "title": "🍡 Thai Dessert Cultural AI & Classification",
-        "subtitle": "AI-Powered Thai Dessert Recognition & Cultural Knowledge Platform",
-        "settings": "⚙️ Settings",
+        "subtitle": "Deep Learning Thai Dessert Image Recognition & Cultural Heritage Encyclopedia",
+        "settings": "⚙️ System Settings",
         "model_select": "Select Model Architecture:",
-        "about_title": "📊 System Info",
-        "about_desc": "- **Classes:** 10 Categories\n- **Input Shape:** 224 x 224 pixels\n- **References:** KediNet, AUCC & ThaiFood-50",
+        "about_title": "📊 Model Details",
+        "about_desc": "- **Classes:** 10 Thai Dessert Classes\n- **Input Resolution:** 224 x 224 pixels\n- **GitHub Deployment:** Filtered for high-performing, lightweight models",
         "tab1": "📷 Capture & Predict",
         "tab2": "📜 Prediction History",
         "tab3": "📚 Thai Dessert Encyclopedia",
         "input_header": "1. Provide Dessert Image",
-        "mode_select": "Input Mode:",
+        "mode_select": "Input Method:",
         "mode_cam": "Camera Capture",
         "mode_up": "Upload File",
-        "cam_label": "Take a photo of Thai dessert",
-        "up_label": "Upload dessert image (JPG, PNG, WEBP):",
+        "cam_label": "Take a photo using your camera",
+        "up_label": "Select dessert image (JPG, PNG, WEBP):",
         "result_header": "2. Analysis Result",
         "waiting": "👈 Please capture or upload an image to start classification.",
-        "pred_label": "🎉 Prediction:",
+        "pred_label": "Predicted Dessert:",
         "confidence_label": "Confidence Score",
         "warn_low_conf": "⚠️ Warning: Confidence is below 60%. The image might be blurry, poorly lit, or not among the 10 supported desserts.",
         "tts_audio": "🔊 Pronunciation Audio:",
-        "tts_th": "Thai Accent",
-        "tts_en": "English Accent",
+        "tts_btn_th": "Thai Accent",
+        "tts_btn_en": "English Accent",
         "regional_title": "🗺️ Regional Names across Thailand:",
         "reg_c": "Central Thailand:",
         "reg_n": "Northern Thailand:",
         "reg_i": "Northeastern (Isan):",
         "reg_s": "Southern Thailand:",
-        "calories_label": "🔥 Estimated Energy:",
         "find_maps": "📍 Find this dessert on Google Maps",
         "detail_header": "📖 Menu Details & Cultural Heritage",
         "detail_simple": "Quick Overview:",
         "detail_proc": "Ingredients & Method:",
-        "detail_hist": "🏛️ Cultural Heritage:",
+        "detail_hist": "Cultural Heritage:",
         "top3_title": "🏆 Top-3 Probabilities:",
         "col_rank": "Rank",
-        "col_name_th": "Thai Name",
-        "col_name_en": "English Name",
-        "col_prob": "Probability (%)",
+        "col_name": "Dessert Name",
+        "col_prob": "Probability",
         "hist_total": "Total Predictions",
         "hist_avg_conf": "Average Confidence",
         "hist_clear": "🗑️ Clear All History",
         "hist_empty": "No prediction history recorded yet.",
-        "hist_export": "📥 Download History (CSV)"
+        "hist_export": "📥 Download History (CSV)",
+        "hist_col_id": "ID",
+        "hist_col_time": "Timestamp",
+        "hist_col_model": "Model",
+        "hist_col_name": "Predicted Dessert",
+        "hist_col_conf": "Confidence (%)"
     }
 }
 
 # ========================================================
-# 6. ส่วนติดต่อผู้ใช้ (UI Layout)
+# 6. ส่วนติดต่อผู้ใช้ (Streamlit UI Layout)
 # ========================================================
 with st.sidebar:
     lang_choice = st.radio("🌐 ภาษา / Language", ["ภาษาไทย (TH)", "English (EN)"], horizontal=True)
@@ -409,8 +423,19 @@ with st.sidebar:
     t = UI_TEXT[lang]
 
     st.header(t["settings"])
-    selected_model_name = st.selectbox(t["model_select"], list(MODEL_OPTIONS.keys()))
-    current_model_cfg = MODEL_OPTIONS[selected_model_name]
+    
+    # ดึงชื่อโมเดลตามภาษาที่เลือก
+    model_keys = list(AVAILABLE_MODELS.keys())
+    model_labels = [AVAILABLE_MODELS[k]["name_th" if lang == "th" else "name_en"] for k in model_keys]
+    
+    selected_idx = st.selectbox(
+        t["model_select"],
+        range(len(model_keys)),
+        format_func=lambda i: model_labels[i]
+    )
+    
+    selected_model_key = model_keys[selected_idx]
+    current_model_cfg = AVAILABLE_MODELS[selected_model_key]
     
     st.divider()
     st.subheader(t["about_title"])
@@ -458,62 +483,58 @@ with tab1:
                 
                 # บันทึกประวัติ
                 save_history(
-                    selected_model_name.split()[0],
+                    selected_model_key,
                     pred_key,
-                    info["th_name"],
-                    info["en_name"],
+                    info["name"]["th"],
+                    info["name"]["en"],
                     confidence
                 )
 
-            # แสดงผลการทำนาย
-            st.success(f"### {t['pred_label']} **{info['th_name'] if lang=='th' else info['en_name']}**")
-            st.markdown(f"**{'English' if lang=='th' else 'ชื่อไทย'}:** {info['en_name'] if lang=='th' else info['th_name']}")
+            # แสดงผลการทำนายหลักตามภาษาที่เลือก
+            st.success(f"### {t['pred_label']} **{info['name'][lang]}**")
             st.metric(label=t["confidence_label"], value=f"{confidence:.2f}%")
             st.progress(min(confidence / 100.0, 1.0))
 
-            # แจ้งเตือนความมั่นใจต่ำกว่า 60%
+            # แจ้งเตือนเมื่อความมั่นใจต่ำ
             if confidence < 60.0:
                 st.warning(t["warn_low_conf"])
 
-            # พลังงาน และปุ่มค้นหาร้านใน Google Maps
-            col_info1, col_info2 = st.columns(2)
-            with col_info1:
-                st.info(f"{t['calories_label']} **{info['calories']}**")
-            with col_info2:
-                maps_url = f"https://www.google.com/maps/search/{info['th_name']}"
-                st.link_button(t["find_maps"], maps_url, use_container_width=True)
+            # ปุ่มค้นหาร้านบน Google Maps
+            search_query = info["name"]["th"]
+            maps_url = f"https://www.google.com/maps/search/{search_query}"
+            st.link_button(t["find_maps"], maps_url, use_container_width=True)
 
-            # เสียงอ่าน Text-to-Speech (gTTS)
+            # เสียงอ่าน Text-to-Speech
             st.markdown(f"#### {t['tts_audio']}")
             c_audio1, c_audio2 = st.columns(2)
             with c_audio1:
-                st.caption(t["tts_th"])
-                audio_th = generate_speech(info["th_name"], lang="th")
+                st.caption(t["tts_btn_th"])
+                audio_th = generate_speech(info["name"]["th"], lang="th")
                 st.audio(audio_th, format="audio/mp3")
             with c_audio2:
-                st.caption(t["tts_en"])
-                audio_en = generate_speech(info["en_name"], lang="en")
+                st.caption(t["tts_btn_en"])
+                audio_en = generate_speech(info["name"]["en"], lang="en")
                 st.audio(audio_en, format="audio/mp3")
 
-            # ชื่อเรียกแต่ละภูมิภาค
+            # ชื่อเรียกแต่ละภูมิภาค (เปลี่ยนภาษาครบถ้วน)
             st.divider()
             st.markdown(f"#### {t['regional_title']}")
             reg_col1, reg_col2 = st.columns(2)
             with reg_col1:
-                st.markdown(f"- **{t['reg_c']}** {info['regional']['central']}")
-                st.markdown(f"- **{t['reg_n']}** {info['regional']['north']}")
+                st.markdown(f"- **{t['reg_c']}** {info['regional'][lang]['central']}")
+                st.markdown(f"- **{t['reg_n']}** {info['regional'][lang]['north']}")
             with reg_col2:
-                st.markdown(f"- **{t['reg_i']}** {info['regional']['isan']}")
-                st.markdown(f"- **{t['reg_s']}** {info['regional']['south']}")
+                st.markdown(f"- **{t['reg_i']}** {info['regional'][lang]['isan']}")
+                st.markdown(f"- **{t['reg_s']}** {info['regional'][lang]['south']}")
 
-            # ข้อมูลเชิงลึกและประวัติวัฒนธรรม
+            # ข้อมูลเชิงลึกและประวัติวัฒนธรรม (แสดงเฉพาะภาษาที่เลือก)
             st.divider()
             with st.expander(t["detail_header"], expanded=True):
-                st.write(f"**{t['detail_simple']}** {info['simple_th'] if lang=='th' else info['simple_en']}")
-                st.write(f"**{t['detail_proc']}** {info['detail_th'] if lang=='th' else info['detail_en']}")
-                st.write(f"**{t['detail_hist']}** {info['history_th'] if lang=='th' else info['history_en']}")
+                st.write(f"**{t['detail_simple']}** {info['simple'][lang]}")
+                st.write(f"**{t['detail_proc']}** {info['detail'][lang]}")
+                st.write(f"**{t['detail_hist']}** {info['history'][lang]}")
 
-            # ตาราง Top-3 Probabilities
+            # ตาราง Top-3
             st.divider()
             st.markdown(f"#### {t['top3_title']}")
             top_3_indices = np.argsort(preds)[::-1][:3]
@@ -522,8 +543,7 @@ with tab1:
                 key = CLASS_NAMES[idx]
                 top_3_data.append({
                     t["col_rank"]: rank,
-                    t["col_name_th"]: DESSERT_INFO[key]["th_name"],
-                    t["col_name_en"]: DESSERT_INFO[key]["en_name"],
+                    t["col_name"]: DESSERT_INFO[key]["name"][lang],
                     t["col_prob"]: f"{preds[idx]*100:.2f}%"
                 })
             st.table(pd.DataFrame(top_3_data))
@@ -548,17 +568,10 @@ with tab2:
             csv_data = history_df.to_csv(index=False).encode('utf-8-sig')
             st.download_button(t["hist_export"], data=csv_data, file_name="dessert_predictions_history.csv", mime="text/csv")
             
-        st.dataframe(
-            history_df[["id", "timestamp", "model_name", "thai_name", "eng_name", "confidence"]].rename(columns={
-                "id": "ID",
-                "timestamp": "Timestamp",
-                "model_name": "Model",
-                "thai_name": "Thai Name",
-                "eng_name": "English Name",
-                "confidence": "Confidence (%)"
-            }),
-            use_container_width=True
-        )
+        display_name_col = "thai_name" if lang == "th" else "eng_name"
+        view_df = history_df[["id", "timestamp", "model_name", display_name_col, "confidence"]].copy()
+        view_df.columns = [t["hist_col_id"], t["hist_col_time"], t["hist_col_model"], t["hist_col_name"], t["hist_col_conf"]]
+        st.dataframe(view_df, use_container_width=True)
         
         if st.button(t["hist_clear"], type="secondary"):
             conn = sqlite3.connect(DB_PATH)
@@ -570,26 +583,15 @@ with tab2:
         st.info(t["hist_empty"])
 
 # --------------------------------------------------------
-# แท็บที่ 3: คลังความรู้ขนมไทย 10 คลาส
+# แท็บที่ 3: สารานุกรมขนมไทย 10 เมนู
 # --------------------------------------------------------
 with tab3:
     st.subheader(t["tab3"])
     for key, item in DESSERT_INFO.items():
-        with st.expander(f"🍡 {item['th_name']} ({item['en_name']}) - 🔥 {item['calories']}"):
-            c1, c2 = st.columns(2)
-            with c1:
-                st.markdown("#### 🇹🇭 ข้อมูลภาษาไทย")
-                st.write(f"**คำอธิบาย:** {item['simple_th']}")
-                st.write(f"**กรรมวิธี:** {item['detail_th']}")
-                st.write(f"**ประวัติ:** {item['history_th']}")
-                st.markdown("**ชื่อเรียกตามภูมิภาค:**")
-                st.write(f"- กลาง: {item['regional']['central']} | เหนือ: {item['regional']['north']}")
-                st.write(f"- อีสาน: {item['regional']['isan']} | ใต้: {item['regional']['south']}")
-            with c2:
-                st.markdown("#### 🇬🇧 English Information")
-                st.write(f"**Description:** {item['simple_en']}")
-                st.write(f"**Preparation:** {item['detail_en']}")
-                st.write(f"**History:** {item['history_en']}")
-                st.markdown("**Regional Names:**")
-                st.write(f"- Central: {item['regional']['central']} | North: {item['regional']['north']}")
-                st.write(f"- Isan: {item['regional']['isan']} | South: {item['regional']['south']}")
+        with st.expander(f"🍡 {item['name'][lang]}"):
+            st.write(f"**{t['detail_simple']}** {item['simple'][lang]}")
+            st.write(f"**{t['detail_proc']}** {item['detail'][lang]}")
+            st.write(f"**{t['detail_hist']}** {item['history'][lang]}")
+            st.markdown(f"**{t['regional_title']}**")
+            st.write(f"- {t['reg_c']} {item['regional'][lang]['central']} | {t['reg_n']} {item['regional'][lang]['north']}")
+            st.write(f"- {t['reg_i']} {item['regional'][lang]['isan']} | {t['reg_s']} {item['regional'][lang]['south']}")
